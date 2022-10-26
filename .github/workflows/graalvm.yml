@@ -50,14 +50,14 @@ jobs:
       - name: Commit files
         if: ${{ matrix.os == 'windows-latest' }}
         run: |
-          dir D:\a\html2pop3\EchoServer\target\
+          dir D:\a\EchoServer\EchoServer\target\
           copy D:\a\EchoServer\EchoServer\target\EchoServer.exe   D:\a\EchoServer\EchoServer\executable\windows
           copy D:\a\EchoServer\EchoServer\target\EchoServer-*.exe D:\a\EchoServer\EchoServer\executable\windows
-          #git config --local user.email "action@github.com"
-          #git config --local user.name "GitHub Action"
-          #git add *.exe
-          #git commit -m "[Automated] Added Windows build files"
-          #git pull
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add *.exe
+          git commit -m "[Automated] Added Windows build files"
+          git pull
 
       - name: Commit files
         if: ${{ matrix.os == 'ubuntu-latest' }}
