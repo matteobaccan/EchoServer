@@ -81,8 +81,8 @@ jobs:
 
       - name: Create release date
         id: read_release_win
-         shell: bash
-         run: |
+        shell: bash
+        run: |
           r=$(date "+%Y%m%d-%H%M%S")
           echo "::set-output name=RELEASE_BODY::$r"
 
