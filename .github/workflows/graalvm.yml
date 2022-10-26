@@ -51,13 +51,13 @@ jobs:
         if: ${{ matrix.os == 'windows-latest' }}
         run: |
           dir D:\a\EchoServer\EchoServer\target\
-          copy D:\a\EchoServer\EchoServer\target\EchoServer.exe   D:\a\EchoServer\EchoServer\executable\windows
-          copy D:\a\EchoServer\EchoServer\target\EchoServer-*.exe D:\a\EchoServer\EchoServer\executable\windows
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add *.exe
-          git commit -m "[Automated] Added Windows build files"
-          git pull
+          #copy D:\a\EchoServer\EchoServer\target\EchoServer.exe   D:\a\EchoServer\EchoServer\executable\windows
+          #copy D:\a\EchoServer\EchoServer\target\EchoServer-*.exe D:\a\EchoServer\EchoServer\executable\windows
+          #git config --local user.email "action@github.com"
+          #git config --local user.name "GitHub Action"
+          #git add *.exe
+          #git commit -m "[Automated] Added Windows build files"
+          #git pull
 
       - name: Commit files
         if: ${{ matrix.os == 'ubuntu-latest' }}
@@ -78,6 +78,24 @@ jobs:
           git add .
           git commit -m "[Automated] Added Mac build files"
           git pull
+
+      - name: Create release date
+        id: read_release_win
+         shell: bash
+         run: |
+          r=$(date "+%Y%m%d-%H%M%S")
+          echo "::set-output name=RELEASE_BODY::$r"
+
+      - name: Upload Windows Binaries to Release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: build-${{ steps.read_release_win.outputs.RELEASE_BODY }}
+          file: D:\a\EchoServer\EchoServer\target\EchoServer.exe
+          asset_name: EchoServer.exe
+          release_name: ""
+          body: |
+            Rilascio Windows del ${{ steps.read_release_win.outputs.RELEASE_BODY }}
 
 #      - name: Push changes
 #        uses: ad-m/github-push-action@master
