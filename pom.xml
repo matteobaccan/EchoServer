@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>it.baccan</groupId>
+    <artifactId>EchoServer</artifactId>
+    <version>0.0.1</version>
+    <packaging>jar</packaging>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <exec.mainClass>it.baccan.echoserver.EchoServer</exec.mainClass>
+
+        <!-- Allineare la versione con graalvm.yml -->
+        <graalvm.version>22.3.0</graalvm.version>
+        <native-image-maven-plugin.version>21.2.0</native-image-maven-plugin.version>
+        <skipNativeVersion>true</skipNativeVersion>
+        
+    </properties>
+    
+    <dependencies>
+        <dependency>
+            <groupId>org.microhttp</groupId>
+            <artifactId>microhttp</artifactId>
+            <version>0.8</version>
+        </dependency>
+        <dependency>                                                                                                                                                                                                                                                                                                                                                   
+            <groupId>info.picocli</groupId>                                                                                                                                                                                                                                                                                                                            
+            <artifactId>picocli</artifactId>                                                                                                                                                                                                                                                                                                                           
+            <version>4.6.1</version>                                                                                                                                                                                                                                                                                                                                   
+            <type>jar</type>                                                                                                                                                                                                                                                                                                                                       
+        </dependency>                                                                          
+        <dependency>
+            <groupId>org.graalvm.sdk</groupId>
+            <artifactId>graal-sdk</artifactId>
+            <version>${graalvm.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.graalvm.nativeimage</groupId>
+                <artifactId>native-image-maven-plugin</artifactId>
+                <version>${native-image-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>native-build</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>native-image</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>it.baccan.echoserver.EchoServe</mainClass>
+                            <buildArgs>--no-fallback --allow-incomplete-classpath --enable-https</buildArgs>
+                            <imageName>EchoServer</imageName>
+                            <skip>${skipNativeVersion}</skip>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
