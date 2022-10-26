@@ -11,6 +11,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <exec.mainClass>it.baccan.echoserver.EchoServer</exec.mainClass>
 
+        <maven-compiler-plugin-version>3.10.1</maven-compiler-plugin-version>
         <!-- Allineare la versione con graalvm.yml -->
         <graalvm.version>22.3.0</graalvm.version>
         <native.maven.plugin.version>0.9.16</native.maven.plugin.version>
@@ -27,7 +28,7 @@
         <dependency>                                                                                                                                                                                                                                                                                                                                                   
             <groupId>info.picocli</groupId>                                                                                                                                                                                                                                                                                                                            
             <artifactId>picocli</artifactId>                                                                                                                                                                                                                                                                                                                           
-            <version>4.6.1</version>                                                                                                                                                                                                                                                                                                                                   
+            <version>4.6.3</version>                                                                                                                                                                                                                                                                                                                                   
             <type>jar</type>                                                                                                                                                                                                                                                                                                                                       
         </dependency>                                                                          
         <dependency>
@@ -40,6 +41,22 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <!-- annotationProcessorPaths requires maven-compiler-plugin version 3.5 or higher -->
+                <version>${maven-compiler-plugin-version}</version>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>info.picocli</groupId>
+                            <artifactId>picocli-codegen</artifactId>
+                            <version>4.6.3</version>
+                        </path>
+                    </annotationProcessorPaths>
+                    <skip>${skipNativeVersion}</skip>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.graalvm.buildtools</groupId>
                 <artifactId>native-maven-plugin</artifactId>
