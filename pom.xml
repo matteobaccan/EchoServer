@@ -13,7 +13,7 @@
 
         <!-- Allineare la versione con graalvm.yml -->
         <graalvm.version>22.3.0</graalvm.version>
-        <native-image-maven-plugin.version>21.2.0</native-image-maven-plugin.version>
+        <native.maven.plugin.version>0.9.16</native.maven.plugin.version>
         <skipNativeVersion>true</skipNativeVersion>
         
     </properties>
@@ -40,26 +40,40 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.graalvm.nativeimage</groupId>
-                <artifactId>native-image-maven-plugin</artifactId>
-                <version>${native-image-maven-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>native-build</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>native-image</goal>
-                        </goals>
+	<plugin>
+            <groupId>org.graalvm.buildtools</groupId>
+            <artifactId>native-maven-plugin</artifactId>
+            <version>${native.maven.plugin.version}</version>
+            <extensions>true</extensions>
+            <executions>
+              <execution>
+                <id>build-native</id>
+                <goals>
+                  <goal>compile-no-fork</goal>
+                </goals>
+                <phase>package</phase>
+              </execution>
+              <execution>
+                <id>test-native</id>
+                <goals>
+                  <goal>test</goal>
+                </goals>
+                <phase>test</phase>
+              </execution>
+            </executions>
                         <configuration>
-                            <mainClass>it.baccan.echoserver.EchoServe</mainClass>
-                            <buildArgs>--no-fallback --allow-incomplete-classpath --enable-https</buildArgs>
+                            <mainClass>it.baccan.echoserver.EchoServer</mainClass>
+
+
+<buildArgs>
+    <arg>--no-fallback --allow-incomplete-classpath</arg>
+</buildArgs>
+
+
                             <imageName>EchoServer</imageName>
                             <skip>${skipNativeVersion}</skip>
                         </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+          </plugin>
         </plugins>
     </build>
 </project>
