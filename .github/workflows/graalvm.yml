@@ -3,8 +3,14 @@ name: GraalVM Build
 on:
   push:
     branches: [ main ]
+    paths:
+      - 'src/main/java/it/baccan/echoserver/*.*'
+      - 'pom.xml'
   pull_request:
     branches: [ main ]
+    paths:
+      - 'src/main/java/it/baccan/echoserver/*.*'
+      - 'pom.xml'
 
 jobs:
 
@@ -45,7 +51,7 @@ jobs:
         if: ${{ matrix.os == 'windows-latest' }}
 
       - name: Call maven
-        run: mvn --no-transfer-progress -B package --file pom.xml -DskipNativeVersion=false
+        run: mvn --no-transfer-progress -B package --file pom.xml -Pgraalvm
 
       - name: Commit files
         if: ${{ matrix.os == 'windows-latest' }}

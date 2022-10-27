@@ -19,7 +19,7 @@ import java.util.concurrent.Callable;
  *
  * @author Matteo Baccan
  */
-@Command(name = "EchoServer", mixinStandardHelpOptions = true, version = "EchoServer 0.0.1", description = "Simply EchoServer for stress test")
+@Command(name = "EchoServer", mixinStandardHelpOptions = true, version = "EchoServer 1.0.0", description = "Simply EchoServer for stress test")
 public class EchoServer implements Callable<Integer> {
 
     @Option(names = {"-i", "--ip"}, description = "Ip to use")
@@ -61,7 +61,17 @@ public class EchoServer implements Callable<Integer> {
     // this example implements Callable, so parsing, error handling and handling user
     // requests for usage help or version help can be done with one line of code.
     public static void main(String... args) {
-        int exitCode = new CommandLine(new EchoServer()).execute(args);
+        EchoServer echoServer = new EchoServer();
+        CommandLine commandLine = new CommandLine(echoServer);
+        commandLine.parseArgs(args);
+        if (!commandLine.isUsageHelpRequested() && !commandLine.isVersionHelpRequested()) {
+            System.out.printf("Start EchoServer%non IP: [%s][%s]%nContent-Type: [%s]%nBody: [%s]%nType EchoServer -h for help%n",
+                    echoServer.ip,
+                    echoServer.port,
+                    echoServer.contentType,
+                    echoServer.body);
+        }
+        int exitCode = commandLine.execute(args);
         System.exit(exitCode);
     }
 }

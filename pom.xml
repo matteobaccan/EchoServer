@@ -15,9 +15,67 @@
         <!-- Allineare la versione con graalvm.yml -->
         <graalvm.version>22.3.0</graalvm.version>
         <native.maven.plugin.version>0.9.16</native.maven.plugin.version>
-        <skipNativeVersion>true</skipNativeVersion>
-        
     </properties>
+    
+    <profiles>
+        <!-- Work profile -->
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        
+        <!-- GraalVM profile-->
+        <profile>
+            <id>graalvm</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>${maven-compiler-plugin-version}</version>                
+                        <configuration>
+                            <annotationProcessorPaths>
+                                <path>
+                                    <groupId>info.picocli</groupId>
+                                    <artifactId>picocli-codegen</artifactId>
+                                    <version>4.6.3</version>
+                                </path>
+                            </annotationProcessorPaths>
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.graalvm.buildtools</groupId>
+                        <artifactId>native-maven-plugin</artifactId>
+                        <version>${native.maven.plugin.version}</version>
+                        <extensions>true</extensions>
+                        <executions>
+                            <execution>
+                                <id>build-native</id>
+                                <goals>
+                                    <goal>compile-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <verbose>true</verbose>
+                            <mainClass>it.baccan.echoserver.EchoServer</mainClass>
+                            <buildArgs>
+                                <arg>--no-fallback --allow-incomplete-classpath</arg>
+                            </buildArgs>
+                            <imageName>EchoServer</imageName>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
     
     <dependencies>
         <dependency>
@@ -39,54 +97,5 @@
         </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <!-- annotationProcessorPaths requires maven-compiler-plugin version 3.5 or higher -->
-                <version>${maven-compiler-plugin-version}</version>
-                <configuration>
-                    <annotationProcessorPaths>
-                        <path>
-                            <groupId>info.picocli</groupId>
-                            <artifactId>picocli-codegen</artifactId>
-                            <version>4.6.3</version>
-                        </path>
-                    </annotationProcessorPaths>
-                    <skip>${skipNativeVersion}</skip>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.graalvm.buildtools</groupId>
-                <artifactId>native-maven-plugin</artifactId>
-                <version>${native.maven.plugin.version}</version>
-                <extensions>true</extensions>
-                <executions>
-                    <execution>
-                        <id>build-native</id>
-                        <goals>
-                            <goal>compile-no-fork</goal>
-                        </goals>
-                        <phase>package</phase>
-                    </execution>
-                    <execution>
-                        <id>test-native</id>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                        <phase>test</phase>
-                    </execution>
-                </executions>
-                <configuration>
-                    <mainClass>it.baccan.echoserver.EchoServer</mainClass>
-                    <buildArgs>
-                        <arg>--no-fallback --allow-incomplete-classpath</arg>
-                    </buildArgs>
-                    <imageName>EchoServer</imageName>
-                    <skip>${skipNativeVersion}</skip>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+
 </project>
