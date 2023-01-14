@@ -1,9 +1,14 @@
 # EchoServer
-Simply HTTP echo server for stress test
+
+The HTTP Echo Server is a powerful tool for stress testing. It allows users to create an echo server that will relay all HTTP requests.
+
+## What is an HTTP Echo server
+
+An HTTP Echo Server is a type of server that responds to a client's request by echoing back what was sent. The purpose of an HTTP Echo Server is to test the functionality of a client's HTTP requests. This type of server is most often used in development and testing environments, since it offers a quick way to test the communication between two systems.
 
 ## Usage
 
-```
+```text
 Usage: EchoServer [-hV] [-b=<body>] [-c=<contentType>] [-i=<ip>] [-p=<port>]
 Simply EchoServer for stress test
   -b, --body=<body>   Body to use
@@ -17,7 +22,7 @@ Simply EchoServer for stress test
 
 ## How To use
 
-```
+```bash
 EchoServer --ip=127.0.0.1 --port=8080
 ```
 
