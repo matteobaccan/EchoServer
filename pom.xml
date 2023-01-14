@@ -14,7 +14,7 @@
         <maven-compiler-plugin-version>3.10.1</maven-compiler-plugin-version>
         <!-- Allineare la versione con graalvm.yml -->
         <graalvm.version>22.3.0</graalvm.version>
-        <native.maven.plugin.version>0.9.16</native.maven.plugin.version>
+        <native.maven.plugin.version>0.9.19</native.maven.plugin.version>
     </properties>
     
     <profiles>
@@ -43,7 +43,7 @@
                                 <path>
                                     <groupId>info.picocli</groupId>
                                     <artifactId>picocli-codegen</artifactId>
-                                    <version>4.6.3</version>
+                                    <version>4.7.0</version>
                                 </path>
                             </annotationProcessorPaths>
                         </configuration>
@@ -81,12 +81,12 @@
         <dependency>
             <groupId>org.microhttp</groupId>
             <artifactId>microhttp</artifactId>
-            <version>0.8</version>
+            <version>0.9</version>
         </dependency>
         <dependency>                                                                                                                                                                                                                                                                                                                                                   
             <groupId>info.picocli</groupId>                                                                                                                                                                                                                                                                                                                            
             <artifactId>picocli</artifactId>                                                                                                                                                                                                                                                                                                                           
-            <version>4.6.3</version>                                                                                                                                                                                                                                                                                                                                   
+            <version>4.7.0</version>                                                                                                                                                                                                                                                                                                                                   
             <type>jar</type>                                                                                                                                                                                                                                                                                                                                       
         </dependency>                                                                          
         <dependency>
