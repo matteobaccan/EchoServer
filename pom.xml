@@ -14,7 +14,7 @@
         <maven-compiler-plugin-version>3.11.0</maven-compiler-plugin-version>
         <!-- Allineare la versione con graalvm.yml -->
         <graalvm.version>22.3.1</graalvm.version>
-        <native.maven.plugin.version>0.9.20</native.maven.plugin.version>
+        <native.maven.plugin.version>0.9.21</native.maven.plugin.version>
     </properties>
     
     <profiles>
