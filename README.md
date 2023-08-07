@@ -8,7 +8,7 @@ An HTTP Echo Server is a type of server that responds to a client's request by e
 
 ## Usage
 
-```text
+```bash
 Usage: EchoServer [-hV] [-b=<body>] [-c=<contentType>] [-i=<ip>] [-p=<port>]
 Simply EchoServer for stress test
   -b, --body=<body>   Body to use
