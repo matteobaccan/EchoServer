@@ -41,7 +41,8 @@ public class EchoServer implements Callable<Integer> {
                 "OK",
                 List.of(new Header("Content-Type", contentType)),
                 body.getBytes());
-        Options options = new Options()
+        
+        Options options = Options.builder()
                 .withHost(ip)
                 .withPort(port)
                 .withRequestTimeout(Duration.ofSeconds(60))
@@ -49,7 +50,9 @@ public class EchoServer implements Callable<Integer> {
                 //.withBufferSize(1_024 * 64)
                 .withMaxRequestSize(1_024 * 1_024)
                 .withAcceptLength(0)
-                .withConcurrency(4);
+                .withConcurrency(4)
+                .build();
+        
         Logger logger = new DebugLogger();
         Handler handler = (req, callback) -> callback.accept(response);
         EventLoop eventLoop = new EventLoop(options, logger, handler);
