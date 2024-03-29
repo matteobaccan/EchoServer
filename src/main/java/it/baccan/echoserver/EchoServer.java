@@ -14,6 +14,8 @@ import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import java.util.concurrent.Callable;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ExecutorService;
 
 /**
  *
@@ -22,6 +24,8 @@ import java.util.concurrent.Callable;
 @Command(name = "EchoServer", mixinStandardHelpOptions = true, version = "EchoServer 1.0.0", description = "Simply EchoServer for stress test")
 public class EchoServer implements Callable<Integer> {
 
+    private static ExecutorService executor;
+    
     @Option(names = {"-i", "--ip"}, description = "Ip to use")
     private String ip = "127.0.0.1";
 
@@ -35,12 +39,17 @@ public class EchoServer implements Callable<Integer> {
     private String body = "hello world";
 
     @Override
-    public Integer call() throws Exception { // your business logic goes here...                                                                                                                                                                                                                                                                                   
+    public Integer call() throws Exception { // your business logic goes here...     
+        final int concurrency = 4;
+        executor = Executors.newFixedThreadPool(concurrency);
+        
+        /*
         Response response = new Response(
                 200,
                 "OK",
                 List.of(new Header("Content-Type", contentType)),
                 body.getBytes());
+        */
         
         Options options = Options.builder()
                 .withHost(ip)
@@ -50,11 +59,19 @@ public class EchoServer implements Callable<Integer> {
                 //.withBufferSize(1_024 * 64)
                 .withMaxRequestSize(1_024 * 1_024)
                 .withAcceptLength(0)
-                .withConcurrency(4)
+                .withConcurrency(concurrency)
                 .build();
         
         Logger logger = new DebugLogger();
-        Handler handler = (req, callback) -> callback.accept(response);
+        //Handler handler = (req, callback) -> callback.accept(response);
+        Handler handler = (req, callback) -> executor.execute(() -> {
+            Response response = new Response(
+                    200,
+                    "OK",
+                    List.of(new Header("Content-Type", req.header("Content-Type"))),
+                    req.body());
+            callback.accept(response);
+        });
         EventLoop eventLoop = new EventLoop(options, logger, handler);
         eventLoop.start();
         eventLoop.join();
