@@ -32,7 +32,7 @@ public class EchoServer implements Callable<Integer> {
     private String contentType = "text/plain";
 
     @Option(names = {"-b", "--body"}, description = "Body to use")
-    private String body = "hello world\n";
+    private String body = "hello world";
 
     @Override
     public Integer call() throws Exception { // your business logic goes here...                                                                                                                                                                                                                                                                                   
