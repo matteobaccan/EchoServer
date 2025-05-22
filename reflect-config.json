@@ -1,11 +1,10 @@
 [
-  {
-    "name": "org.microhttp.Header",
-    "allPublicMethods": true, // O elenca specificamente i metodi se preferisci
-    "allDeclaredConstructors": true,
-    "allPublicConstructors": true,
-    "allDeclaredFields": true, // Potrebbe essere necessario anche per i campi
-    "allPublicFields": true
-  }
-  // Aggiungi altre classi qui se necessario
+    {
+        "name": "org.microhttp.Header",
+        "allPublicMethods": true,
+        "allDeclaredConstructors": true,
+        "allPublicConstructors": true,
+        "allDeclaredFields": true,
+        "allPublicFields": true
+    }
 ]
