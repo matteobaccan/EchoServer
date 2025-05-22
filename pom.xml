@@ -79,6 +79,7 @@
                             <mainClass>it.baccan.echoserver.EchoServer</mainClass>
                             <buildArgs>
                                 <arg>--no-fallback --allow-incomplete-classpath</arg>
+                                <arg>-H:ReflectionConfigurationFiles=reflect-config.json/</arg>
                             </buildArgs>
                             <imageName>EchoServer</imageName>
                         </configuration>
