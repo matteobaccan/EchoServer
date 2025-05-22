@@ -1,6 +1,6 @@
 # EchoServer
 
-EchoServer is a simple yet powerful tool for stress-testing HTTP requests. It allows you to launch a server that responds to every HTTP request by simply "echoing" (returning) what it receives from the client. It is useful for testing HTTP clients, automation tools, load balancers, and much more.
+EchoServer is a simple yet powerful tool for stress-testing HTTP requests. It allows you to launch a server that responds to every HTTP request by simply "echoing" (returning) what it receives from the client. This is ideal for debugging, load testing, and analyzing how clients and intermediaries handle HTTP transactions.
 
 ## Main Features
 
@@ -51,6 +51,47 @@ EchoServer --ip=127.0.0.1 --port=8080
 ```
 This will start the server on IP 127.0.0.1 and port 8080.
 
+## Testing All HTTP Methods
+
+You can test the EchoServer with all standard HTTP methods using curl. Replace http://127.0.0.1:8080 with your server address if different.
+
+### GET
+```sh
+curl -X GET http://127.0.0.1:8080/test
+```
+
+### POST
+```sh
+curl -X POST http://127.0.0.1:8080/test -d '{"message":"Hello"}' -H "Content-Type: application/json"
+```
+
+### PUT
+```sh
+curl -X PUT http://127.0.0.1:8080/test -d '{"message":"Update"}' -H "Content-Type: application/json"
+```
+
+### DELETE
+```sh
+curl -X DELETE http://127.0.0.1:8080/test
+```
+
+### PATCH
+```sh
+curl -X PATCH http://127.0.0.1:8080/test -d '{"message":"Partial update"}' -H "Content-Type: application/json"
+```
+
+### OPTIONS
+```sh
+curl -X OPTIONS -i http://127.0.0.1:8080/test
+```
+
+### HEAD
+```sh
+curl -I http://127.0.0.1:8080/test
+```
+
+The server should echo back the request details or respond appropriately for each HTTP method.
+
 ## Example Request and Response
 
 **Request:**
@@ -79,3 +120,7 @@ Contributions, bug reports, and pull requests are welcome! Feel free to open iss
 ## License
 
 This project is licensed under the MIT License.
+
+---
+
+You can replace your current README.md with this version for improved clarity and HTTP method test instructions. Let me know if you want any further customization!
