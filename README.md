@@ -1,29 +1,81 @@
 # EchoServer
 
-The HTTP Echo Server is a powerful tool for stress testing. It allows users to create an echo server that will relay all HTTP requests.
+EchoServer is a simple yet powerful tool for stress-testing HTTP requests. It allows you to launch a server that responds to every HTTP request by simply "echoing" (returning) what it receives from the client. It is useful for testing HTTP clients, automation tools, load balancers, and much more.
 
-## What is an HTTP Echo server
+## Main Features
 
-An HTTP Echo Server is a type of server that responds to a client's request by echoing back what was sent. The purpose of an HTTP Echo Server is to test the functionality of a client's HTTP requests. This type of server is most often used in development and testing environments, since it offers a quick way to test the communication between two systems.
+- Returns body, headers, and parameters of every HTTP request received
+- Configurable for any IP and port
+- Supports specifying the body and content-type of the response
+- Suitable for load testing and HTTP application debugging
+
+## Requirements
+
+- Java 17 or higher
+- Maven (optional, for building from source)
+
+## Installation
+
+Clone the repository:
+```bash
+git clone https://github.com/matteobaccan/EchoServer.git
+cd EchoServer
+```
+
+Build the project with Maven:
+```bash
+mvn clean package
+```
 
 ## Usage
 
+Start the server with:
 ```bash
-Usage: EchoServer [-hV] [-b=<body>] [-c=<contentType>] [-i=<ip>] [-p=<port>]
-Simply EchoServer for stress test
-  -b, --body=<body>   Body to use
-  -c, --content-type=<contentType>
-                      Content-type to use
-  -h, --help          Show this help message and exit.
-  -i, --ip=<ip>       Ip to use
-  -p, --port=<port>   Port to use
-  -V, --version       Print version information and exit.
+java -jar target/EchoServer.jar --ip=127.0.0.1 --port=8080
 ```
 
-## How To use
+Or use the available parameters:
+```
+Usage: EchoServer [-hV] [-b=<body>] [-c=<contentType>] [-i=<ip>] [-p=<port>]
+  -b, --body=<body>         Response body
+  -c, --content-type=<contentType> Response Content-Type
+  -h, --help                Show help and exit
+  -i, --ip=<ip>             IP address for the server to listen on
+  -p, --port=<port>         Port for the server to listen on
+  -V, --version             Show version information and exit
+```
 
+Example:
 ```bash
 EchoServer --ip=127.0.0.1 --port=8080
 ```
+This will start the server on IP 127.0.0.1 and port 8080.
 
-Run an EchoServer on ip 127.0.0.1 and port 8080
+## Example Request and Response
+
+**Request:**
+```bash
+curl -X POST http://127.0.0.1:8080/hello -d "test=123" -H "Custom-Header: foo"
+```
+
+**Response:**
+```json
+{
+  "method": "POST",
+  "path": "/hello",
+  "headers": {
+    "Custom-Header": "foo",
+    ...
+  },
+  "body": "test=123",
+  ...
+}
+```
+
+## Contributing
+
+Contributions, bug reports, and pull requests are welcome! Feel free to open issues or propose improvements.
+
+## License
+
+This project is licensed under the MIT License.
