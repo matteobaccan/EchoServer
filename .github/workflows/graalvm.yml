@@ -6,11 +6,15 @@ on:
     paths:
       - 'src/main/java/it/baccan/echoserver/*.*'
       - 'pom.xml'
+      - 'reflect-config.json'
+      - '.github/workflows/graalvm.yml'
   pull_request:
     branches: [ main ]
     paths:
       - 'src/main/java/it/baccan/echoserver/*.*'
       - 'pom.xml'
+      - 'reflect-config.json'
+      - '.github/workflows/graalvm.yml'
 
 jobs:
 
