@@ -62,7 +62,7 @@ curl -X POST http://127.0.0.1:8080/hello -d "test=123" -H "Custom-Header: foo"
 ```json
 {
   "method": "POST",
-  "path": "/hello",
+  "uri": "/hello",
   "headers": {
     "Custom-Header": "foo",
     ...
